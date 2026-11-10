@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Violets Position Poll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #f5f4f9; --surface: #ffffff; --fg: #1e1a2b; --muted: #615b73; --line: #dedbe8;
+  --violet: #5b2fa8; --violet-soft: #ece5f8; --on-violet: #ffffff;
+  --second: #0f7b74; --second-soft: #dff2ef;
+  --bad: #b42339; --ok: #1f7a3a; --ok-soft: #e1f3e6;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15121d; --surface: #1f1a2a; --fg: #ece9f3; --muted: #a49db6; --line: #352e45;
+    --violet: #a785ec; --violet-soft: #2e2445; --on-violet: #15121d;
+    --second: #5cc8bd; --second-soft: #173533;
+    --bad: #f27a8c; --ok: #6fd18c; --ok-soft: #17321f;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 640px; margin: 0 auto; padding-block: max(28px, env(safe-area-inset-top, 0px)) 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 22px; }
+header { display: flex; flex-direction: column; gap: 6px; }
+.eyebrow { font-family: var(--display); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 13px; color: var(--violet); }
+h1 { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 1; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--display); font-weight: 800; font-size: 30px; line-height: 1.05; margin: 0; }
+.lede { color: var(--muted); margin: 0; max-width: 60ch; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 18px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.label { font-weight: 600; font-size: 14px; }
+.hint { color: var(--muted); font-size: 13px; margin: 0; }
+select, input[type="text"], textarea { font: inherit; font-size: 16px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; }
+textarea { resize: vertical; min-height: 84px; }
+select:focus-visible, input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+.court { display: grid; gap: 6px; }
+.third { display: grid; grid-template-columns: 82px 1fr; align-items: center; gap: 10px; padding: 10px; border: 1px dashed var(--line); border-radius: 10px; }
+.third-name { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; font-size: 12px; color: var(--muted); }
+.bibs { display: flex; flex-wrap: wrap; gap: 8px; }
+.bib { font-family: var(--display); font-weight: 800; font-size: 22px; letter-spacing: .04em; width: 58px; height: 58px; border-radius: 12px 12px 18px 18px; border: 2px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; display: grid; place-items: center; transition: transform .12s; -webkit-tap-highlight-color: transparent; }
+.bib:hover { border-color: var(--violet); }
+.bib[aria-pressed="true"].as-primary { background: var(--violet); border-color: var(--violet); color: var(--on-violet); }
+.bib[aria-pressed="true"].as-secondary { background: var(--second); border-color: var(--second); color: var(--on-violet); }
+.bib:disabled { opacity: .35; cursor: not-allowed; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--bg); color: var(--fg); font: 500 15px var(--body); padding: 9px 15px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--violet-soft); border-color: var(--violet); }
+.btn { border: 0; background: var(--violet); color: var(--on-violet); font: 600 16px var(--body); padding: 14px 18px; border-radius: 10px; cursor: pointer; width: 100%; }
+.btn:disabled { opacity: .6; cursor: wait; }
+.btn.secondary { background: transparent; color: var(--violet); border: 1px solid var(--violet); width: auto; }
+.error { color: var(--bad); font-size: 14px; margin: 0; }
+.done { align-items: flex-start; }
+.tick { width: 56px; height: 56px; border-radius: 50%; background: var(--ok-soft); color: var(--ok); display: grid; place-items: center; font-size: 30px; font-weight: 700; }
+.summary { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: .03em; }
+.summary .p { color: var(--violet); } .summary .s { color: var(--second); }
+.backup textarea { font-family: ui-monospace, Menlo, monospace; font-size: 13px; min-height: 140px; }
+@media (max-width: 420px) {
+  .third { grid-template-columns: 1fr; }
+  .bib { width: 54px; height: 54px; font-size: 20px; }
+  h1 { font-size: 34px; }
+}
+@media (prefers-reduced-motion: reduce) { .bib { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Arena Jetz · U15 Violets · Summer 2026/27</span>
+    <h1>Your positions this season</h1>
+    <p class="lede">Tell us where you'd most like to play and your back-up spot. Only the coaches see your answers. Every player still gets fair court time, and this helps us put you where you're happiest.</p>
+  </header>
+
+  <section id="view-form" class="panel">
+    <div class="field">
+      <label class="label" for="name">Your name</label>
+      <select id="name"></select>
+      <input type="text" id="name-other" placeholder="Type your first and last name" maxlength="60" hidden>
+    </div>
+
+    <div class="field">
+      <span class="label">1. Your main position</span>
+      <p class="hint">Tap the position you'd most like to play.</p>
+      <div class="court" id="court-primary"></div>
+    </div>
+
+    <div class="field">
+      <span class="label">2. Your second position</span>
+      <p class="hint">Where else would you be happy to play?</p>
+      <div class="court" id="court-secondary"></div>
+    </div>
+
+    <div class="legend">
+      <span><i class="dot" style="background:var(--violet)"></i>Main position</span>
+      <span><i class="dot" style="background:var(--second)"></i>Second position</span>
+    </div>
+
+    <div class="field">
+      <span class="label">3. Are you open to trying new positions this season?</span>
+      <div class="chips" id="open"></div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="goal">4. What's one goal you have for this season?</label>
+      <textarea id="goal" maxlength="400" placeholder="For example: get more intercepts, improve my shooting under pressure, feel confident at Centre"></textarea>
+    </div>
+
+    <p class="error" id="form-error" hidden></p>
+    <button class="btn" id="submit" type="button">Send my answers to my coach</button>
+
+    <div class="field backup" id="backup" hidden>
+      <span class="label">Plan B: send this to Coach Allan instead</span>
+      <p class="hint">Press and hold the text below, copy it, and send it to Coach Allan as a private Messenger message.</p>
+      <textarea id="backup-text" readonly></textarea>
+    </div>
+  </section>
+
+  <section id="view-done" class="panel done" hidden>
+    <div class="tick" aria-hidden="true">✓</div>
+    <h2>Thanks! Your coach has your answers.</h2>
+    <p class="summary" id="done-summary"></p>
+    <p class="lede">You don't need to do anything else. If you change your mind, you can send new answers and your coach will see the latest ones.</p>
+    <button class="btn secondary" id="again" type="button">Change my answers</button>
+  </section>
+</div>
+
+<script>
+(function () {
+  // ---------- SETTINGS ----------
+  var SUPABASE_URL = "https://fkwoiaxmmjfegiltawkg.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_Vkgec1iLL5QOBNnRNMWqZQ_n6HKD2VL"; // Supabase → Project Settings → API Keys → anon / publishable key
+  var CLUB_ID = "e87a3c69-ce71-41da-b37c-690f050409c3";
+  var POLL = "u15-violets-summer-2026-27";
+  // First name + last initial only, because this page is public.
+  var ROSTER = ["Addison D","Ally T","Ellie H","Evelina B","Georgia B","Isabelle H","Karina P","Lilah W","Talia F"];
+  // ------------------------------
+
+  var THIRDS = [
+    { name: "Attack", pos: ["GS","GA"] },
+    { name: "Centre", pos: ["WA","C","WD"] },
+    { name: "Defence", pos: ["GD","GK"] }
+  ];
+  var POS_NAMES = { GS:"Goal Shooter", GA:"Goal Attack", WA:"Wing Attack", C:"Centre", WD:"Wing Defence", GD:"Goal Defence", GK:"Goal Keeper" };
+  var OPEN = ["Yes, keen", "Maybe", "Prefer not"];
+  var state = { primary: "", secondary: "", open: "" };
+
+  function $(id) { return document.getElementById(id); }
+
+  // Name picker
+  var sel = $("name");
+  function addOpt(v, t) { var o = document.createElement("option"); o.value = v; o.textContent = t; sel.appendChild(o); }
+  addOpt("", "Choose your name");
+  ROSTER.forEach(function (n) { addOpt(n, n); });
+  addOpt("__other", "My name isn't listed");
+  sel.addEventListener("change", function () { $("name-other").hidden = sel.value !== "__other"; });
+
+  // Courts
+  function buildCourt(el, kind) {
+    THIRDS.forEach(function (t) {
+      var row = document.createElement("div"); row.className = "third";
+      var nm = document.createElement("span"); nm.className = "third-name"; nm.textContent = t.name + " third"; row.appendChild(nm);
+      var bibs = document.createElement("div"); bibs.className = "bibs";
+      t.pos.forEach(function (p) {
+        var b = document.createElement("button");
+        b.type = "button"; b.className = "bib"; b.textContent = p; b.dataset.pos = p; b.dataset.kind = kind;
+        b.setAttribute("aria-label", POS_NAMES[p]); b.title = POS_NAMES[p];
+        b.addEventListener("click", function () {
+          state[kind] = state[kind] === p ? "" : p;
+          if (state.primary && state.primary === state.secondary) state.secondary = "";
+          paint();
+        });
+        bibs.appendChild(b);
+      });
+      row.appendChild(bibs); el.appendChild(row);
+    });
+  }
+  function paint() {
+    document.querySelectorAll(".bib").forEach(function (b) {
+      var k = b.dataset.kind, p = b.dataset.pos;
+      b.setAttribute("aria-pressed", state[k] === p ? "true" : "false");
+      b.classList.toggle("as-primary", k === "primary");
+      b.classList.toggle("as-secondary", k === "secondary");
+      b.disabled = (k === "secondary" && state.primary === p);
+    });
+  }
+  buildCourt($("court-primary"), "primary");
+  buildCourt($("court-secondary"), "secondary");
+  paint();
+
+  // Open-to-new chips
+  OPEN.forEach(function (v) {
+    var c = document.createElement("button"); c.type = "button"; c.className = "chip"; c.textContent = v;
+    c.setAttribute("aria-pressed", "false");
+    c.addEventListener("click", function () {
+      state.open = v;
+      document.querySelectorAll("#open .chip").forEach(function (x) { x.setAttribute("aria-pressed", x.textContent === v ? "true" : "false"); });
+    });
+    $("open").appendChild(c);
+  });
+
+  function collect() {
+    var name = sel.value === "__other" ? $("name-other").value.trim() : sel.value;
+    var errs = [];
+    if (!name) errs.push("choose your name");
+    if (!state.primary) errs.push("pick your main position");
+    if (!state.secondary) errs.push("pick a second position");
+    if (!state.open) errs.push("say if you're open to new positions");
+    var e = $("form-error");
+    if (errs.length) { e.textContent = "Please " + errs.join(", ") + "."; e.hidden = false; return null; }
+    e.hidden = true;
+    return { name: name.slice(0, 60), primary: state.primary, secondary: state.secondary, open: state.open, goal: $("goal").value.trim().slice(0, 400) };
+  }
+
+  function backupText(r) {
+    return "Jetz position poll\nName: " + r.name + "\nMain: " + r.primary + " (" + POS_NAMES[r.primary] + ")\nSecond: " + r.secondary + " (" + POS_NAMES[r.secondary] + ")\nOpen to new positions: " + r.open + "\nGoal: " + (r.goal || "-");
+  }
+
+  async function send(r) {
+    var headers = { "apikey": SUPABASE_KEY, "Content-Type": "application/json", "Prefer": "return=minimal" };
+    if (SUPABASE_KEY.indexOf("eyJ") === 0) headers["Authorization"] = "Bearer " + SUPABASE_KEY; // legacy anon (JWT) keys
+    var res = await fetch(SUPABASE_URL + "/rest/v1/position_poll_responses", {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        club_id: CLUB_ID, poll: POLL, player_name: r.name,
+        primary_pos: r.primary, secondary_pos: r.secondary, open_to_new: r.open, goal: r.goal
+      })
+    });
+    if (!res.ok) { var t = ""; try { t = await res.text(); } catch (x) {} throw new Error(res.status + " " + t); }
+  }
+
+  $("submit").addEventListener("click", async function () {
+    var r = collect(); if (!r) return;
+    var btn = $("submit"); btn.disabled = true; btn.textContent = "Sending…";
+    try {
+      await send(r);
+      $("done-summary").innerHTML = "";
+      var s = $("done-summary");
+      s.appendChild(document.createTextNode(r.name + ": "));
+      var a = document.createElement("span"); a.className = "p"; a.textContent = r.primary; s.appendChild(a);
+      s.appendChild(document.createTextNode(" / "));
+      var b = document.createElement("span"); b.className = "s"; b.textContent = r.secondary; s.appendChild(b);
+      $("view-form").hidden = true; $("view-done").hidden = false;
+      window.scrollTo(0, 0);
+    } catch (err) {
+      console.error(err);
+      $("form-error").textContent = "Sorry, your answers didn't send. Check your internet and tap the button again. If it still doesn't work, use Plan B below.";
+      $("form-error").hidden = false;
+      $("backup-text").value = backupText(r);
+      $("backup").hidden = false;
+    } finally {
+      btn.disabled = false; btn.textContent = "Send my answers to my coach";
+    }
+  });
+
+  $("again").addEventListener("click", function () {
+    $("view-done").hidden = true; $("view-form").hidden = false; $("backup").hidden = true; window.scrollTo(0, 0);
+  });
+})();
+</script>
+</body>
+</html>
