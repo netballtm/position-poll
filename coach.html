@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Violets Poll Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #f5f4f9; --surface: #ffffff; --fg: #1e1a2b; --muted: #615b73; --line: #dedbe8;
+  --violet: #5b2fa8; --violet-soft: #ece5f8; --on-violet: #ffffff;
+  --second: #0f7b74; --second-soft: #dff2ef;
+  --warn: #a35a00; --warn-soft: #fbefdc; --bad: #b42339; --bad-soft: #fbe3e7; --ok: #1f7a3a; --ok-soft: #e1f3e6;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15121d; --surface: #1f1a2a; --fg: #ece9f3; --muted: #a49db6; --line: #352e45;
+    --violet: #a785ec; --violet-soft: #2e2445; --on-violet: #15121d;
+    --second: #5cc8bd; --second-soft: #173533;
+    --warn: #f0b25c; --warn-soft: #3a2a14; --bad: #f27a8c; --bad-soft: #3e1c23; --ok: #6fd18c; --ok-soft: #17321f;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: max(28px, env(safe-area-inset-top, 0px)) 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 20px; }
+header { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.eyebrow { font-family: var(--display); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 13px; color: var(--violet); }
+h1 { font-family: var(--display); font-weight: 800; font-size: 38px; line-height: 1; margin: 4px 0 0; }
+h2 { font-family: var(--display); font-weight: 700; font-size: 22px; margin: 0; letter-spacing: .01em; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.muted { color: var(--muted); font-size: 13px; margin: 0; }
+label { font-weight: 600; font-size: 14px; }
+input { font: inherit; font-size: 16px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; }
+input:focus-visible, button:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+.btn { border: 0; background: var(--violet); color: var(--on-violet); font: 600 15px var(--body); padding: 11px 16px; border-radius: 10px; cursor: pointer; }
+.btn:disabled { opacity: .6; cursor: wait; }
+.btn.ghost { background: transparent; color: var(--violet); border: 1px solid var(--line); }
+.btn.small { padding: 6px 10px; font-size: 13px; }
+.btn.danger { background: transparent; color: var(--bad); border: 1px solid var(--line); }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.error { color: var(--bad); font-size: 14px; margin: 0; }
+.login { max-width: 420px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.tile b { display: block; font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+.tile span { font-size: 13px; color: var(--muted); }
+.tile.alert b { color: var(--bad); }
+.grid-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; color: var(--muted); }
+td.pos { font-family: var(--display); font-weight: 800; font-size: 20px; width: 52px; }
+td.pos small { display: block; font-family: var(--body); font-weight: 400; font-size: 11px; color: var(--muted); letter-spacing: 0; }
+.names { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag { font-size: 13px; padding: 2px 9px; border-radius: 999px; background: var(--violet-soft); white-space: nowrap; }
+.tag.s { background: var(--second-soft); }
+.dash { color: var(--muted); }
+.flag { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; display: inline-block; }
+.flag.gap { background: var(--bad-soft); color: var(--bad); }
+.flag.crowd { background: var(--warn-soft); color: var(--warn); }
+.flag.fine { background: var(--ok-soft); color: var(--ok); }
+.pending { display: flex; flex-wrap: wrap; gap: 6px; }
+.pending span { font-size: 13px; padding: 3px 10px; border-radius: 999px; border: 1px dashed var(--line); color: var(--muted); }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.card { border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.card-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.card-name { font-weight: 600; }
+.card-pos { font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: .03em; }
+.card-pos .p { color: var(--violet); } .card-pos .s { color: var(--second); }
+.open { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; align-self: flex-start; }
+.open.yes { background: var(--ok-soft); color: var(--ok); }
+.open.maybe { background: var(--violet-soft); color: var(--fg); }
+.open.no { background: var(--warn-soft); color: var(--warn); }
+.goal { font-size: 14px; overflow-wrap: anywhere; margin: 0; }
+.when { font-size: 12px; color: var(--muted); }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+@media (max-width: 640px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cards { grid-template-columns: 1fr; }
+  h1 { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Arena Jetz · U15 Violets · Summer 2026/27</div>
+      <h1>Position poll results</h1>
+    </div>
+    <div class="row" id="top-actions" hidden>
+      <button class="btn ghost small" id="refresh" type="button">Refresh</button>
+      <button class="btn ghost small" id="signout" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <!-- Sign in -->
+  <section class="panel login" id="view-login" hidden>
+    <h2>Coaches sign in</h2>
+    <p class="muted">Use the same email and password you use in the team app. Only admins and coaches can see the answers.</p>
+    <form id="login-form" class="field" style="gap:12px">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+      <p class="error" id="login-error" hidden></p>
+      <button class="btn" id="login-btn" type="submit">Sign in</button>
+    </form>
+  </section>
+
+  <p class="muted" id="loading">Loading…</p>
+
+  <!-- Results -->
+  <div id="view-results" hidden style="display:flex;flex-direction:column;gap:20px">
+    <p class="error" id="results-error" hidden></p>
+
+    <div class="tiles" id="tiles"></div>
+
+    <section class="panel">
+      <div class="row" style="justify-content:space-between">
+        <h2>Who wants each position</h2>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--violet-soft);border:1px solid var(--violet)"></i>Main</span>
+          <span><i class="dot" style="background:var(--second-soft);border:1px solid var(--second)"></i>Second</span>
+        </div>
+      </div>
+      <div class="grid-wrap">
+        <table>
+          <thead><tr><th>Pos</th><th>Main</th><th>Second</th><th>Check</th></tr></thead>
+          <tbody id="pos-grid"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Still to reply</h2>
+      <div class="pending" id="pending"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Every reply</h2>
+      <p class="muted">If a player sends answers more than once, only their latest answers show.</p>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <p class="muted" id="updated"></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>window.__supabaseLib = window.supabase;</script>
+<script>
+(function () {
+  // ---------- SETTINGS (same key as index.html) ----------
+  var SUPABASE_URL = "https://fkwoiaxmmjfegiltawkg.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_Vkgec1iLL5QOBNnRNMWqZQ_n6HKD2VL";
+  var POLL = "u15-violets-summer-2026-27";
+  var ROSTER = ["Addison D","Ashlyn M","Ava H","Beth B","Chloe C","Ciara D","Georgia B","Hannah F","Isabelle H","Layla S"];
+  // --------------------------------------------------------
+
+  var ALL_POS = ["GS","GA","WA","C","WD","GD","GK"];
+  var POS_NAMES = { GS:"Shooter", GA:"Attack", WA:"Wing Att", C:"Centre", WD:"Wing Def", GD:"Goal Def", GK:"Keeper" };
+  var db = window.__supabaseLib.createClient(SUPABASE_URL, SUPABASE_KEY);
+  var rows = [], isAdmin = false, timer = null;
+
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function show(which) {
+    $("loading").hidden = which !== "loading";
+    $("view-login").hidden = which !== "login";
+    $("view-results").hidden = which !== "results";
+    $("top-actions").hidden = which !== "results";
+  }
+
+  async function checkRole() {
+    isAdmin = false;
+    try {
+      var u = (await db.auth.getUser()).data.user;
+      if (!u) return;
+      var r = await db.from("coaches").select("role").eq("id", u.id).maybeSingle();
+      isAdmin = !!(r.data && r.data.role === "admin");
+    } catch (e) {}
+  }
+
+  async function load() {
+    $("refresh").disabled = true;
+    var res = await db.from("position_poll_latest")
+      .select("player_name, primary_pos, secondary_pos, open_to_new, goal, created_at")
+      .eq("poll", POLL);
+    $("refresh").disabled = false;
+    var err = $("results-error");
+    if (res.error) {
+      err.textContent = "Couldn't load the answers: " + res.error.message;
+      err.hidden = false; return;
+    }
+    err.hidden = true;
+    rows = res.data || [];
+    render();
+    $("updated").textContent = "Last updated " + new Date().toLocaleTimeString("en-AU", { hour: "numeric", minute: "2-digit" }) + ". Refreshes every minute.";
+  }
+
+  function render() {
+    var byPos = {}; ALL_POS.forEach(function (p) { byPos[p] = { m: [], s: [] }; });
+    rows.forEach(function (r) {
+      if (byPos[r.primary_pos]) byPos[r.primary_pos].m.push(r.player_name);
+      if (byPos[r.secondary_pos]) byPos[r.secondary_pos].s.push(r.player_name);
+    });
+    var replied = rows.map(function (r) { return r.player_name.toLowerCase(); });
+    var pending = ROSTER.filter(function (n) { return replied.indexOf(n.toLowerCase()) < 0; });
+    var keen = rows.filter(function (r) { return r.open_to_new === "Yes, keen"; }).length;
+    var problems = ALL_POS.filter(function (p) { var m = byPos[p].m.length, t = m + byPos[p].s.length; return t === 0 || m === 0 || m >= 3; }).length;
+
+    // tiles
+    var tiles = $("tiles"); tiles.innerHTML = "";
+    [[rows.length + " / " + ROSTER.length, "replied", false],
+     [pending.length, "still to reply", false],
+     [keen, "keen to try new spots", false],
+     [problems, problems === 1 ? "position to look at" : "positions to look at", problems > 0]
+    ].forEach(function (t) {
+      var d = el("div", "tile" + (t[2] ? " alert" : "")); d.appendChild(el("b", null, String(t[0]))); d.appendChild(el("span", null, t[1])); tiles.appendChild(d);
+    });
+
+    // position grid
+    var tb = $("pos-grid"); tb.innerHTML = "";
+    ALL_POS.forEach(function (p) {
+      var tr = el("tr");
+      var tdp = el("td", "pos", p); tdp.appendChild(el("small", null, POS_NAMES[p])); tr.appendChild(tdp);
+      [["m", "tag"], ["s", "tag s"]].forEach(function (k) {
+        var td = el("td"), w = el("div", "names");
+        if (!byPos[p][k[0]].length) w.appendChild(el("span", "dash", "–"));
+        byPos[p][k[0]].forEach(function (n) { w.appendChild(el("span", k[1], n)); });
+        td.appendChild(w); tr.appendChild(td);
+      });
+      var m = byPos[p].m.length, tot = m + byPos[p].s.length, f;
+      if (!rows.length) f = el("span", "dash", "–");
+      else if (tot === 0) f = el("span", "flag gap", "No one");
+      else if (m === 0) f = el("span", "flag crowd", "Back-ups only");
+      else if (m >= 3) f = el("span", "flag crowd", m + " want it");
+      else f = el("span", "flag fine", "Covered");
+      var tdf = el("td"); tdf.appendChild(f); tr.appendChild(tdf);
+      tb.appendChild(tr);
+    });
+
+    // pending
+    var pe = $("pending"); pe.innerHTML = "";
+    if (!pending.length) pe.appendChild(el("p", "muted", "Everyone has replied."));
+    pending.forEach(function (n) { pe.appendChild(el("span", null, n)); });
+
+    // cards
+    var cards = $("cards"); cards.innerHTML = "";
+    if (!rows.length) { cards.appendChild(el("p", "muted", "No replies yet. They'll appear here as players send them.")); return; }
+    rows.slice().sort(function (a, b) { return a.player_name.localeCompare(b.player_name); }).forEach(function (r) {
+      var c = el("div", "card");
+      var top = el("div", "card-top");
+      top.appendChild(el("span", "card-name", r.player_name));
+      var ps = el("span", "card-pos"); ps.appendChild(el("span", "p", r.primary_pos)); ps.appendChild(document.createTextNode(" / ")); ps.appendChild(el("span", "s", r.secondary_pos));
+      top.appendChild(ps); c.appendChild(top);
+      var oc = r.open_to_new === "Yes, keen" ? "yes" : r.open_to_new === "Maybe" ? "maybe" : "no";
+      c.appendChild(el("span", "open " + oc, "New positions: " + r.open_to_new));
+      c.appendChild(el("p", "goal", r.goal ? "Goal: " + r.goal : "No goal given"));
+      c.appendChild(el("span", "when", "Sent " + new Date(r.created_at).toLocaleString("en-AU", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })));
+      if (isAdmin) {
+        var del = el("button", "btn small danger", "Remove"); del.type = "button";
+        del.style.alignSelf = "flex-start";
+        del.addEventListener("click", async function () {
+          if (!del.dataset.armed) {
+            del.dataset.armed = "1"; del.textContent = "Tap again to remove all of " + r.player_name + "'s answers";
+            setTimeout(function () { del.dataset.armed = ""; del.textContent = "Remove"; }, 5000); return;
+          }
+          del.disabled = true;
+          var d = await db.from("position_poll_responses").delete().eq("poll", POLL).eq("player_name", r.player_name);
+          if (d.error) { $("results-error").textContent = "Couldn't remove: " + d.error.message; $("results-error").hidden = false; }
+          load();
+        });
+        c.appendChild(del);
+      }
+      cards.appendChild(c);
+    });
+  }
+
+  async function enter() {
+    show("results");
+    await checkRole();
+    await load();
+    clearInterval(timer);
+    timer = setInterval(function () { if (!document.hidden) load(); }, 60000);
+  }
+
+  $("login-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var btn = $("login-btn"), err = $("login-error");
+    btn.disabled = true; btn.textContent = "Signing in…"; err.hidden = true;
+    var r = await db.auth.signInWithPassword({ email: $("email").value.trim(), password: $("password").value });
+    btn.disabled = false; btn.textContent = "Sign in";
+    if (r.error) { err.textContent = "That email and password didn't work. Check them and try again."; err.hidden = false; return; }
+    $("password").value = "";
+    enter();
+  });
+  $("refresh").addEventListener("click", load);
+  $("signout").addEventListener("click", async function () { clearInterval(timer); await db.auth.signOut(); rows = []; show("login"); });
+
+  (async function start() {
+    show("loading");
+    var s = (await db.auth.getSession()).data.session;
+    if (s) enter(); else show("login");
+  })();
+})();
+</script>
+</body>
+</html>
