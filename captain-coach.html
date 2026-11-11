@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Violets Captain Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #f5f4f9; --surface: #ffffff; --fg: #1e1a2b; --muted: #615b73; --line: #dedbe8;
+  --violet: #5b2fa8; --violet-soft: #ece5f8; --on-violet: #ffffff;
+  --v3: #5b2fa8; --v2: #7d55c2; --v1: #a689d8;
+  --gold: #8a6100; --gold-soft: #fbf0d5;
+  --warn: #a35a00; --warn-soft: #fbefdc; --bad: #b42339; --ok: #1f7a3a; --ok-soft: #e1f3e6;
+  --display: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
+  --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15121d; --surface: #1f1a2a; --fg: #ece9f3; --muted: #a49db6; --line: #352e45;
+    --violet: #a785ec; --violet-soft: #2e2445; --on-violet: #15121d;
+    --v3: #b998f5; --v2: #9a7ad6; --v1: #7a63a8;
+    --gold: #f0c35c; --gold-soft: #3a2f14;
+    --warn: #f0b25c; --warn-soft: #3a2a14; --bad: #f27a8c; --ok: #6fd18c; --ok-soft: #17321f;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: max(28px, env(safe-area-inset-top, 0px)) 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 20px; }
+header { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.eyebrow { font-family: var(--display); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 13px; color: var(--violet); }
+h1 { font-family: var(--display); font-weight: 800; font-size: 38px; line-height: 1; margin: 4px 0 0; }
+h2 { font-family: var(--display); font-weight: 700; font-size: 22px; margin: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.muted { color: var(--muted); font-size: 13px; margin: 0; }
+label { font-weight: 600; font-size: 14px; }
+input { font: inherit; font-size: 16px; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; width: 100%; }
+input:focus-visible, button:focus-visible { outline: 2px solid var(--violet); outline-offset: 2px; }
+.btn { border: 0; background: var(--violet); color: var(--on-violet); font: 600 15px var(--body); padding: 11px 16px; border-radius: 10px; cursor: pointer; }
+.btn:disabled { opacity: .6; cursor: wait; }
+.btn.ghost { background: transparent; color: var(--violet); border: 1px solid var(--line); }
+.btn.small { padding: 6px 10px; font-size: 13px; }
+.btn.danger { background: transparent; color: var(--bad); border: 1px solid var(--line); }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.error { color: var(--bad); font-size: 14px; margin: 0; }
+.login { max-width: 420px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.note { font-size: 14px; padding: 10px 12px; border-radius: 10px; background: var(--warn-soft); color: var(--fg); margin: 0; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; min-width: 0; }
+.tile b { display: block; font-family: var(--display); font-weight: 800; font-size: 30px; line-height: 1.05; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.tile span { font-size: 13px; color: var(--muted); }
+.tile.c { border-color: var(--gold); background: var(--gold-soft); }
+.tally { display: flex; flex-direction: column; gap: 10px; }
+.trow { display: grid; grid-template-columns: 26px 120px 1fr 52px; gap: 10px; align-items: center; }
+.rank { font-family: var(--display); font-weight: 700; color: var(--muted); font-size: 16px; text-align: right; font-variant-numeric: tabular-nums; }
+.tname { font-weight: 600; display: flex; align-items: center; gap: 6px; min-width: 0; }
+.tname span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cap { font-family: var(--display); font-weight: 800; font-size: 12px; padding: 1px 6px; border-radius: 6px; background: var(--gold); color: var(--surface); }
+.bar { display: flex; height: 22px; border-radius: 6px; overflow: hidden; background: var(--bg); }
+.bar i { display: block; height: 100%; }
+.bar .b3 { background: var(--v3); } .bar .b2 { background: var(--v2); } .bar .b1 { background: var(--v1); }
+.pts { font-family: var(--display); font-weight: 800; font-size: 22px; text-align: right; font-variant-numeric: tabular-nums; }
+.breakdown { font-size: 12px; color: var(--muted); grid-column: 3 / 5; margin-top: -6px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.pending { display: flex; flex-wrap: wrap; gap: 6px; }
+.pending span { font-size: 13px; padding: 3px 10px; border-radius: 999px; border: 1px dashed var(--line); color: var(--muted); }
+.grid-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--display); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; color: var(--muted); white-space: nowrap; }
+td.reason { min-width: 200px; overflow-wrap: anywhere; }
+.when { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.again { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: var(--warn-soft); color: var(--warn); white-space: nowrap; display: inline-block; margin-top: 4px; }
+@media (max-width: 640px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trow { grid-template-columns: 22px 92px 1fr 44px; gap: 8px; }
+  h1 { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Arena Jetz · U15 Violets · Summer 2026/27</div>
+      <h1>Captain vote results</h1>
+    </div>
+    <div class="row" id="top-actions" hidden>
+      <button class="btn ghost small" id="refresh" type="button">Refresh</button>
+      <button class="btn ghost small" id="signout" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <section class="panel login" id="view-login" hidden>
+    <h2>Coaches sign in</h2>
+    <p class="muted">Use the same email and password you use in the team app. Only admins and coaches can see the votes.</p>
+    <form id="login-form" class="field" style="gap:12px">
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required></div>
+      <p class="error" id="login-error" hidden></p>
+      <button class="btn" id="login-btn" type="submit">Sign in</button>
+    </form>
+  </section>
+
+  <p class="muted" id="loading">Loading…</p>
+
+  <div id="view-results" hidden style="display:flex;flex-direction:column;gap:20px">
+    <p class="error" id="results-error" hidden></p>
+    <div class="tiles" id="tiles"></div>
+    <p class="note" id="tie-note" hidden></p>
+
+    <section class="panel">
+      <div class="row" style="justify-content:space-between">
+        <h2>Vote totals</h2>
+        <div class="legend">
+          <span><i class="dot" style="background:var(--v3)"></i>3 votes</span>
+          <span><i class="dot" style="background:var(--v2)"></i>2 votes</span>
+          <span><i class="dot" style="background:var(--v1)"></i>1 vote</span>
+        </div>
+      </div>
+      <p class="muted">Ties are split by who got more 3-vote picks, then more 2-vote picks.</p>
+      <div class="tally" id="tally"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Still to vote</h2>
+      <div class="pending" id="pending"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Every ballot</h2>
+      <p class="muted">Only each player's latest ballot counts. "Voted more than once" can mean they changed their mind, or that someone else picked their name, so it's worth a quiet check.</p>
+      <div class="grid-wrap">
+        <table>
+          <thead><tr><th>Voter</th><th>3</th><th>2</th><th>1</th><th>Reason</th><th></th></tr></thead>
+          <tbody id="ballots"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <p class="muted" id="updated"></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>window.__supabaseLib = window.supabase;</script>
+<script>
+(function () {
+  // ---------- SETTINGS (same key as index.html) ----------
+  var SUPABASE_URL = "https://fkwoiaxmmjfegiltawkg.supabase.co";
+  var SUPABASE_KEY = "sb_publishable_Vkgec1iLL5QOBNnRNMWqZQ_n6HKD2VL";
+  var POLL = "u15-violets-captain-summer-2026-27";
+  var ROSTER = ["Addison D","Ashlyn M","Ava H","Beth B","Chloe C","Ciara D","Georgia B","Hannah F","Isabelle H","Layla S"];
+  // --------------------------------------------------------
+
+  var db = window.__supabaseLib.createClient(SUPABASE_URL, SUPABASE_KEY);
+  var raw = [], isAdmin = false, timer = null;
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function show(which) {
+    $("loading").hidden = which !== "loading";
+    $("view-login").hidden = which !== "login";
+    $("view-results").hidden = which !== "results";
+    $("top-actions").hidden = which !== "results";
+  }
+
+  async function checkRole() {
+    isAdmin = false;
+    try {
+      var u = (await db.auth.getUser()).data.user; if (!u) return;
+      var r = await db.from("coaches").select("role").eq("id", u.id).maybeSingle();
+      isAdmin = !!(r.data && r.data.role === "admin");
+    } catch (e) {}
+  }
+
+  async function load() {
+    $("refresh").disabled = true;
+    var res = await db.from("captain_votes")
+      .select("voter_name, vote3, vote2, vote1, reason, created_at")
+      .eq("poll", POLL).order("created_at", { ascending: true });
+    $("refresh").disabled = false;
+    if (res.error) { $("results-error").textContent = "Couldn't load the votes: " + res.error.message; $("results-error").hidden = false; return; }
+    $("results-error").hidden = true;
+    raw = res.data || [];
+    render();
+    $("updated").textContent = "Last updated " + new Date().toLocaleTimeString("en-AU", { hour: "numeric", minute: "2-digit" }) + ". Refreshes every minute.";
+  }
+
+  function render() {
+    // latest ballot per voter + how many times they voted
+    var latest = {}, count = {};
+    raw.forEach(function (b) { latest[b.voter_name] = b; count[b.voter_name] = (count[b.voter_name] || 0) + 1; });
+    var ballots = Object.keys(latest).map(function (k) { return latest[k]; });
+
+    // tally
+    var t = {}; ROSTER.forEach(function (n) { t[n] = { name: n, pts: 0, c3: 0, c2: 0, c1: 0 }; });
+    ballots.forEach(function (b) {
+      [[b.vote3, 3, "c3"], [b.vote2, 2, "c2"], [b.vote1, 1, "c1"]].forEach(function (v) {
+        if (!t[v[0]]) t[v[0]] = { name: v[0], pts: 0, c3: 0, c2: 0, c1: 0 };
+        t[v[0]].pts += v[1]; t[v[0]][v[2]] += 1;
+      });
+    });
+    var ranked = Object.keys(t).map(function (k) { return t[k]; }).sort(function (a, b) {
+      return b.pts - a.pts || b.c3 - a.c3 || b.c2 - a.c2 || a.name.localeCompare(b.name);
+    });
+    function same(a, b) { return a && b && a.pts === b.pts && a.c3 === b.c3 && a.c2 === b.c2; }
+    var hasVotes = ballots.length > 0;
+    var cap = hasVotes && ranked[0] && ranked[0].pts ? ranked[0] : null;
+    var vc = hasVotes && ranked[1] && ranked[1].pts ? ranked[1] : null;
+
+    var pending = ROSTER.filter(function (n) { return !latest[n]; });
+
+    // tiles
+    var tiles = $("tiles"); tiles.innerHTML = "";
+    [[ballots.length + " / " + ROSTER.length, "have voted", ""],
+     [pending.length, "still to vote", ""],
+     [cap ? cap.name : "–", "leading for captain", cap ? " c" : ""],
+     [vc ? vc.name : "–", "leading for vice captain", ""]
+    ].forEach(function (x) { var d = el("div", "tile" + x[2]); d.appendChild(el("b", null, String(x[0]))); d.appendChild(el("span", null, x[1])); tiles.appendChild(d); });
+
+    // tie note
+    var notes = [];
+    if (hasVotes && same(ranked[0], ranked[1])) notes.push("There's a tie for captain between " + ranked[0].name + " and " + ranked[1].name + ".");
+    else if (hasVotes && ranked[1] && ranked[1].pts && same(ranked[1], ranked[2])) notes.push("There's a tie for vice captain between " + ranked[1].name + " and " + ranked[2].name + ".");
+    if (pending.length && hasVotes) notes.push("Results may change: " + pending.length + (pending.length === 1 ? " player hasn't" : " players haven't") + " voted yet.");
+    $("tie-note").textContent = notes.join(" "); $("tie-note").hidden = !notes.length;
+
+    // tally bars
+    var max = Math.max(1, ranked.length ? ranked[0].pts : 1);
+    var tally = $("tally"); tally.innerHTML = "";
+    if (!hasVotes) { tally.appendChild(el("p", "muted", "No votes yet. Totals will appear here as players vote.")); }
+    else ranked.forEach(function (r, i) {
+      var row = el("div", "trow");
+      row.appendChild(el("span", "rank", String(i + 1)));
+      var nm = el("span", "tname"); nm.appendChild(el("span", null, r.name));
+      if (r === cap) nm.appendChild(el("span", "cap", "C")); else if (r === vc) nm.appendChild(el("span", "cap", "VC"));
+      row.appendChild(nm);
+      var bar = el("div", "bar");
+      [["b3", r.c3 * 3], ["b2", r.c2 * 2], ["b1", r.c1]].forEach(function (s) { if (s[1]) { var seg = el("i", s[0]); seg.style.width = (s[1] / max * 100) + "%"; bar.appendChild(seg); } });
+      row.appendChild(bar);
+      row.appendChild(el("span", "pts", String(r.pts)));
+      var bd = el("span", "breakdown", r.pts ? (r.c3 + "× 3 · " + r.c2 + "× 2 · " + r.c1 + "× 1") : "No votes");
+      row.appendChild(bd);
+      tally.appendChild(row);
+    });
+
+    // pending
+    var pe = $("pending"); pe.innerHTML = "";
+    if (!pending.length) pe.appendChild(el("p", "muted", "Everyone has voted."));
+    pending.forEach(function (n) { pe.appendChild(el("span", null, n)); });
+
+    // ballots
+    var tb = $("ballots"); tb.innerHTML = "";
+    if (!ballots.length) { var tr0 = el("tr"); var td0 = el("td", "muted", "No ballots yet."); td0.colSpan = 6; tr0.appendChild(td0); tb.appendChild(tr0); return; }
+    ballots.sort(function (a, b) { return a.voter_name.localeCompare(b.voter_name); }).forEach(function (b) {
+      var tr = el("tr");
+      var tv = el("td"); tv.appendChild(el("div", null, b.voter_name));
+      tv.appendChild(el("div", "when", new Date(b.created_at).toLocaleString("en-AU", { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" })));
+      if (count[b.voter_name] > 1) tv.appendChild(el("span", "again", "Voted " + count[b.voter_name] + " times"));
+      tr.appendChild(tv);
+      tr.appendChild(el("td", null, b.vote3));
+      tr.appendChild(el("td", null, b.vote2));
+      tr.appendChild(el("td", null, b.vote1));
+      tr.appendChild(el("td", "reason", b.reason || "–"));
+      var ta = el("td");
+      if (isAdmin) {
+        var del = el("button", "btn small danger", "Remove"); del.type = "button";
+        del.addEventListener("click", async function () {
+          if (!del.dataset.armed) { del.dataset.armed = "1"; del.textContent = "Tap again"; setTimeout(function () { del.dataset.armed = ""; del.textContent = "Remove"; }, 5000); return; }
+          del.disabled = true;
+          var d = await db.from("captain_votes").delete().eq("poll", POLL).eq("voter_name", b.voter_name);
+          if (d.error) { $("results-error").textContent = "Couldn't remove: " + d.error.message; $("results-error").hidden = false; }
+          load();
+        });
+        ta.appendChild(del);
+      }
+      tr.appendChild(ta);
+      tb.appendChild(tr);
+    });
+  }
+
+  async function enter() {
+    show("results");
+    await checkRole();
+    await load();
+    clearInterval(timer);
+    timer = setInterval(function () { if (!document.hidden) load(); }, 60000);
+  }
+
+  $("login-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var btn = $("login-btn"), err = $("login-error");
+    btn.disabled = true; btn.textContent = "Signing in…"; err.hidden = true;
+    var r = await db.auth.signInWithPassword({ email: $("email").value.trim(), password: $("password").value });
+    btn.disabled = false; btn.textContent = "Sign in";
+    if (r.error) { err.textContent = "That email and password didn't work. Check them and try again."; err.hidden = false; return; }
+    $("password").value = "";
+    enter();
+  });
+  $("refresh").addEventListener("click", load);
+  $("signout").addEventListener("click", async function () { clearInterval(timer); await db.auth.signOut(); raw = []; show("login"); });
+
+  (async function start() {
+    show("loading");
+    var s = (await db.auth.getSession()).data.session;
+    if (s) enter(); else show("login");
+  })();
+})();
+</script>
+</body>
+</html>
