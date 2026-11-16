@@ -86,7 +86,7 @@ select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2p
   <header>
     <span class="eyebrow">Arena Jetz · U15 Violets · Summer 2026/27</span>
     <h1>Vote for your captain</h1>
-    <p class="lede">Give 3 votes to the player you think would make the best captain, 2 votes to your next pick, and 1 vote to your third. You can vote for yourself.</p>
+    <p class="lede">Give 3 votes to the player you think would make the best captain, 2 votes to your next pick, and 1 vote to your third.</p>
   </header>
 
   <section id="view-form" class="panel">
@@ -129,11 +129,14 @@ select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2p
 (function () {
   // ---------- SETTINGS ----------
   var SUPABASE_URL = "https://fkwoiaxmmjfegiltawkg.supabase.co";
-  var SUPABASE_KEY = "sb_publishable_Vkgec1iLL5QOBNnRNMWqZQ_n6HKD2VL"; // same key as index.html
+  var SUPABASE_KEY = "PASTE_YOUR_ANON_KEY_HERE"; // same key as index.html
   var CLUB_ID = "e87a3c69-ce71-41da-b37c-690f050409c3";
   var POLL = "u15-violets-captain-summer-2026-27";
-  // Must match the list in 1_captain_vote_table.sql exactly.
+  // Must match the lists in 3_add_coach_voter.sql exactly.
+  // ROSTER = players who can be voted for. VOTERS = everyone who can vote.
   var ROSTER = ["Addison D","Ashlyn M","Ava H","Beth B","Chloe C","Ciara D","Georgia B","Hannah F","Isabelle H","Layla S"];
+  var COACH_VOTERS = ["Coach Kristen"];
+  var VOTERS = ROSTER.concat(COACH_VOTERS);
   // ------------------------------
 
   var votes = { 3: "", 2: "", 1: "" };
@@ -143,7 +146,7 @@ select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2p
   var sel = $("name");
   function addOpt(v, t) { var o = document.createElement("option"); o.value = v; o.textContent = t; sel.appendChild(o); }
   addOpt("", "Choose your name");
-  ROSTER.forEach(function (n) { addOpt(n, n); });
+  VOTERS.forEach(function (n) { addOpt(n, n); });
   sel.addEventListener("change", function () { render(); });
 
   function nextFree() { return !votes[3] ? 3 : !votes[2] ? 2 : !votes[1] ? 1 : 0; }
@@ -163,14 +166,14 @@ select:focus-visible, textarea:focus-visible, button:focus-visible { outline: 2p
     // hint
     var nf = nextFree();
     $("pick-hint").textContent = !me ? "Choose your name first."
-      : nf ? "Tap a player to give them " + nf + (nf === 1 ? " vote." : " votes.") + " You can include yourself. Tap them again to take it back."
+      : nf ? "Tap a player to give them " + nf + (nf === 1 ? " vote." : " votes.") + " Tap them again to take it back."
       : "All votes given. Tap a player to take their votes back.";
-    // players (everyone, including yourself)
+    // players
     var list = $("players"); list.innerHTML = "";
     ROSTER.forEach(function (n) {
       var v = voteOf(n);
       var b = el("button", "pl"); b.type = "button";
-      b.appendChild(el("span", null, n === me ? n + " (you)" : n));
+      b.appendChild(el("span", null, n));
       if (v) { b.dataset.v = String(v); b.appendChild(el("span", "badge", String(v))); }
       b.disabled = !me || (!v && !nf);
       b.setAttribute("aria-label", n + (v ? ", " + v + " votes" : ""));

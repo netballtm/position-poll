@@ -157,9 +157,12 @@ td.reason { min-width: 200px; overflow-wrap: anywhere; }
 (function () {
   // ---------- SETTINGS (same key as index.html) ----------
   var SUPABASE_URL = "https://fkwoiaxmmjfegiltawkg.supabase.co";
-  var SUPABASE_KEY = "sb_publishable_Vkgec1iLL5QOBNnRNMWqZQ_n6HKD2VL";
+  var SUPABASE_KEY = "PASTE_YOUR_ANON_KEY_HERE";
   var POLL = "u15-violets-captain-summer-2026-27";
+  // ROSTER = players who can be voted for. VOTERS = everyone who can vote.
   var ROSTER = ["Addison D","Ashlyn M","Ava H","Beth B","Chloe C","Ciara D","Georgia B","Hannah F","Isabelle H","Layla S"];
+  var COACH_VOTERS = ["Coach Kristen"];
+  var VOTERS = ROSTER.concat(COACH_VOTERS);
   // --------------------------------------------------------
 
   var db = window.__supabaseLib.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -217,11 +220,11 @@ td.reason { min-width: 200px; overflow-wrap: anywhere; }
     var cap = hasVotes && ranked[0] && ranked[0].pts ? ranked[0] : null;
     var vc = hasVotes && ranked[1] && ranked[1].pts ? ranked[1] : null;
 
-    var pending = ROSTER.filter(function (n) { return !latest[n]; });
+    var pending = VOTERS.filter(function (n) { return !latest[n]; });
 
     // tiles
     var tiles = $("tiles"); tiles.innerHTML = "";
-    [[ballots.length + " / " + ROSTER.length, "have voted", ""],
+    [[ballots.length + " / " + VOTERS.length, "have voted", ""],
      [pending.length, "still to vote", ""],
      [cap ? cap.name : "–", "leading for captain", cap ? " c" : ""],
      [vc ? vc.name : "–", "leading for vice captain", ""]
