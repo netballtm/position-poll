@@ -305,7 +305,13 @@ td.reason { min-width: 200px; overflow-wrap: anywhere; }
     btn.disabled = true; btn.textContent = "Signing in…"; err.hidden = true;
     var r = await db.auth.signInWithPassword({ email: $("email").value.trim(), password: $("password").value });
     btn.disabled = false; btn.textContent = "Sign in";
-    if (r.error) { err.textContent = "That email and password didn't work. Check them and try again."; err.hidden = false; return; }
+    if (r.error) {
+      var m = (r.error.message || "").toLowerCase();
+      if (SUPABASE_KEY.indexOf("PASTE_") === 0 || m.indexOf("api key") >= 0) err.textContent = "This page is missing its Supabase key, so it can't check your sign-in. The key needs adding to captain-coach.html. (" + r.error.message + ")";
+      else if (m.indexOf("invalid login") >= 0) err.textContent = "That email and password didn't match an app account. Check them and try again. (" + r.error.message + ")";
+      else err.textContent = "Sign-in didn't work: " + r.error.message;
+      err.hidden = false; return;
+    }
     $("password").value = "";
     enter();
   });
